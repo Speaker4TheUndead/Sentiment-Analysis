@@ -2,16 +2,17 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from textblob import TextBlob
-
+from textblob.sentiments import NaiveBayesAnalyzer
 
 def analyze(text):
     total = 0
     avg = 0
-    blob = TextBlob(text)
-    for sentence in blob.sentences:
-        total += 1
-        # print(sentence.sentiment.polarity)
-        avg += sentence.sentiment.polarity
+    blob = TextBlob(text, analyzer=NaiveBayesAnalyzer())
+    return blob.sentiment[0] + " pos:" + str(blob.sentiment[1]) + " neg:" + str(blob.sentiment[2])
+    # for sentence in blob.sentences:
+    #    total += 1
+    #    # print(sentence.sentiment.polarity)
+    #    avg += sentence.sentiment.polarity
 
     return str(avg / total)
     # 0.060
