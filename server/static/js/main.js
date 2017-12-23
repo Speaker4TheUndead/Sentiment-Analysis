@@ -1,19 +1,19 @@
 $(document).ready(function () {
     $("#base").append("<textarea id='text' rows=\"10\" cols=\"50\">Enter the text you wish to analyze.</textarea>");
-    $("#buttonDiv").append("<input type='submit'> onclick='get");
+    $("#buttonDiv").append("<input class='btn btn-large' type='submit'>");
     $('#buttonDiv').click(function (){
         var userText = $('#text').val();
         $.ajax({
             url: '/analyze',
             type: 'POST',
             data: {
-                text: $('#text').val();
+                text: $('#text').val(),
             },
             dataType: 'text',
             success: function(data){
                 alert(data);
             }
-        })
+        });
     })
 });
 //
