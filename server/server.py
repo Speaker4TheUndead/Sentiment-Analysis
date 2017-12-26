@@ -19,7 +19,6 @@ def analyze(text):
     # -0.341
 
 
-
 app = Flask(__name__)
 
 
@@ -27,15 +26,26 @@ app = Flask(__name__)
 def index(name=None):
     return render_template('index.html', name=name)
 
+
 @app.route('/analyze', methods=['POST'])
-def ajaxtest():
-    error = None
+def analyze_route():
     if len(request.form['text']) > 5000:
-        error = "Too many Characters. Bad Request."
+        return "Too many Characters. Bad Request."
     elif request.method == 'POST':
         return analyze(request.form['text'])
     else:
         return "Eat my asshole"
+
+
+@app.route('/about')
+def about_route():
+    return render_template('about.html')
+
+
+@app.route('/donate')
+def donate_route():
+    return render_template('donate.html')
+
 
 if __name__ == '__main__':
     app.run()
