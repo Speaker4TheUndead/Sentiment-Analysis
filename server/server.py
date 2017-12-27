@@ -4,6 +4,7 @@ from flask import request
 from textblob import TextBlob
 from textblob.sentiments import NaiveBayesAnalyzer
 
+
 def analyze(text):
     total = 0
     avg = 0
@@ -14,7 +15,7 @@ def analyze(text):
     #    # print(sentence.sentiment.polarity)
     #    avg += sentence.sentiment.polarity
 
-    return str(avg / total)
+    # return str(avg / total)
     # 0.060
     # -0.341
 
@@ -31,10 +32,8 @@ def index(name=None):
 def analyze_route():
     if len(request.form['text']) > 5000:
         return "Too many Characters. Bad Request."
-    elif request.method == 'POST':
-        return analyze(request.form['text'])
     else:
-        return "Eat my asshole"
+        return analyze(request.form['text'])
 
 
 @app.route('/about')
