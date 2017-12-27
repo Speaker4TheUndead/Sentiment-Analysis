@@ -1,5 +1,5 @@
-.jumbotron { 
-    background-color: #f4511e; /* Orange */
+.jumbotron, #topbar {
+    background-color: #f4511e;
+    /* Orange */
     color: #ffffff;
-    
-            }
+}
