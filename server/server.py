@@ -5,9 +5,7 @@ from textblob import TextBlob
 from textblob.sentiments import NaiveBayesAnalyzer
 
 
-def analyze(text):
-    total = 0
-    avg = 0
+def analyze_nv(text):
     blob = TextBlob(text, analyzer=NaiveBayesAnalyzer())
     return blob.sentiment[0] + " pos:" + str(blob.sentiment[1]) + " neg:" + str(blob.sentiment[2])
     # for sentence in blob.sentences:
@@ -18,6 +16,17 @@ def analyze(text):
     # return str(avg / total)
     # 0.060
     # -0.341
+
+
+def analyze(text):
+    total = 0
+    avg = 0
+    blob = TextBlob(text)
+    for sentence in blob.sentences:
+        total += 1
+    # print(sentence.sentiment.polarity)
+        avg += sentence.sentiment.polarity
+    return str(avg / total)
 
 
 app = Flask(__name__)
@@ -34,6 +43,14 @@ def analyze_route():
         return "Too many Characters. Bad Request."
     else:
         return analyze(request.form['text'])
+
+
+@app.route('/analyze_nv', methods=['POST'])
+def analyze_nv_route():
+    if len(request.form['text']) > 5000:
+        return "Too many Characters. Bad Request."
+    else:
+        return analyze_nv(request.form['text'])
 
 
 @app.route('/about')
