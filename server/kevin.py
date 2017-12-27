@@ -63,9 +63,8 @@ def donate_route():
     return render_template('people.html')
 
 @app.route('/index')
-def donate_route():
+def index_route():
     return render_template('index.html')
-
 
 if __name__ == '__main__':
     app.run()
