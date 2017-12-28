@@ -58,10 +58,13 @@ def about_route():
     return render_template('about.html')
 
 
-@app.route('/donate')
+@app.route('/people')
 def donate_route():
-    return render_template('donate.html')
+    return render_template('people.html')
 
+@app.route('/index')
+def index_route():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run()
