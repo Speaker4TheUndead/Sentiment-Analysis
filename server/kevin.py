@@ -3,11 +3,17 @@ from flask import render_template
 from flask import request
 from textblob import TextBlob
 from textblob.sentiments import NaiveBayesAnalyzer
-
+import json
 
 def analyze_nv(text):
     blob = TextBlob(text, analyzer=NaiveBayesAnalyzer())
-    return blob.sentiment[0] + " pos:" + str(blob.sentiment[1]) + " neg:" + str(blob.sentiment[2])
+    jsonGraph = {"sentiment":blob.sentiment[0],
+                "pos":blob.sentiment[1],
+                "neg":blob.sentiment[2]}
+    return json.dumps(jsonGraph)
+
+    #return blob.sentiment[0] + " pos:" + str(blob.sentiment[1]) + " neg:" + str(blob.sentiment[2])
+
     # for sentence in blob.sentences:
     #    total += 1
     #    # print(sentence.sentiment.polarity)
@@ -26,7 +32,7 @@ def analyze(text):
         total += 1
     # print(sentence.sentiment.polarity)
         avg += sentence.sentiment.polarity
-    return str(avg / total)
+    return "Polarity: "+str(blob.sentiment.polarity)+" Objectivity: "+str(blob.sentiment.subjectivity)
 
 
 app = Flask(__name__)

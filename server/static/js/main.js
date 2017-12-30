@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    GRAPH = document.getElementById('graph');
     $("#base").append("<textarea id='text' rows=\"10\" cols=\"50\">Enter the text you wish to analyze.</textarea>");
     $("#buttonDiv").append("<input class='btn btn-info btn-large' id='naive_bayes' type='submit' value='Naive Bayes'>");
     $('#buttonDiv').append('<p>     </p>')
@@ -14,7 +15,22 @@ $(document).ready(function () {
             },
             dataType: 'text',
             success: function (data) {
-                alert(data);
+                $('#results').empty();
+                $('#results').append("<p>"+data+"</p>");
+
+                var graph_data= [{
+                    values:[data.pos,data.neg],
+                    labels:['Postivity','Negativity'],
+                    type:'pie'
+                }];
+                var layout = {
+                    height: 400,
+                    width: 600
+                };
+                console.log(data.pos);
+                console.log(data.neg);
+                Plotly.newPlot('graph',graph_data,layout);
+                
             }
         });
     })
@@ -29,6 +45,8 @@ $(document).ready(function () {
             },
             dataType: 'text',
             success: function (data) {
+                $('#results').empty();
+                $('#results').append("<p>"+data+"</p>");
                 alert(data);
             }
         });
