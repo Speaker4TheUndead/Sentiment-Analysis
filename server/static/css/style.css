@@ -213,3 +213,7 @@ footer .glyphicon {
         font-size: 150px;
     }
 }
+
+.peronsal_photo {
+    overflow: hidden;
+}

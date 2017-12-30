@@ -5,11 +5,13 @@ from textblob import TextBlob
 from textblob.sentiments import NaiveBayesAnalyzer
 import json
 
+
 def analyze_nv(text):
     blob = TextBlob(text, analyzer=NaiveBayesAnalyzer())
     jsonGraph = {"sentiment":blob.sentiment[0],
                 "pos":blob.sentiment[1],
                 "neg":blob.sentiment[2]}
+    print(json.dumps(jsonGraph))
     return json.dumps(jsonGraph)
 
     #return blob.sentiment[0] + " pos:" + str(blob.sentiment[1]) + " neg:" + str(blob.sentiment[2])
@@ -73,4 +75,4 @@ def index_route():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='127.0.0.1')
