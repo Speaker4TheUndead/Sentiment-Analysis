@@ -217,3 +217,25 @@ footer .glyphicon {
 .peronsal_photo {
     overflow: hidden;
 }
+
+#patternData {
+    font-size: 1.5em;
+    overflow: scroll;
+}
+
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#results {
+    max-height: 30vh;
+}

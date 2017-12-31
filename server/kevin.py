@@ -29,13 +29,15 @@ def analyze_nv(text):
 
 def analyze(text):
     total = 0
-    avg = 0
     blob = TextBlob(text)
+    jsonSentenceData = {}
     for sentence in blob.sentences:
+        jsonSentenceData.update({str(sentence): sentence.sentiment.polarity})
         total += 1
     # print(sentence.sentiment.polarity)
-        avg += sentence.sentiment.polarity
-    return "Polarity: "+str(blob.sentiment.polarity)+" Objectivity: "+str(blob.sentiment.subjectivity)
+
+    jsonData = {"polarity": blob.sentiment.polarity, "sentence_data": jsonSentenceData}
+    return json.dumps(jsonData)
 
 
 app = Flask(__name__)

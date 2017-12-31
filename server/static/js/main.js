@@ -1,21 +1,20 @@
 $(document).ready(function () {
     GRAPH = document.getElementById('graph');
+    $("#results").hide();
     $("#base").append("<textarea id='text' rows=\"10\" cols=\"50\">Enter the text you wish to analyze.</textarea>");
-    $("#buttonDiv").append("<input class='btn btn-info btn-large' id='naive_bayes' type='submit' value='Naive Bayes'>");
-    $('#buttonDiv').append('<p>     </p>');
-    $("#buttonDiv").append("<input class='btn btn-info btn-large' id='pattern_matching' type='submit' value='Pattern Matching'>");
+    $("#buttonDiv").append("<input class='btn btn-info btn-large' id='analyze' type='submit' value='Naive Bayes'>");
 
-    $('#naive_bayes').click(function () {
+    $('#analyze').click(function () {
         var userText = $('#text').val();
         $.ajax({
             url: '/analyze_nv',
             type: 'POST',
             data: {
-                text: $('#text').val(),
+                text: userText,
             },
             dataType: "json",
             success: function (data) {
-                $('#results').empty();
+                //$('#results').empty();
                 $('#results').append("<p>"+JSON.stringify(data)+"</p>");
 
                 var graph_data= [{
@@ -30,26 +29,52 @@ $(document).ready(function () {
                 };
                 console.log(data["pos"]);
                 console.log(data["neg"]);
-                Plotly.newPlot('graph', graph_data, layout);
-                
+                Plotly.newPlot('graph', graph_data);
             }
         });
-    })
-
-    $('#pattern_matching').click(function () {
-        var userText = $('#text').val();
         $.ajax({
             url: '/analyze',
             type: 'POST',
             data: {
-                text: $('#text').val(),
+                text: userText,
             },
-            dataType: 'text',
+            dataType: 'json',
             success: function (data) {
-                $('#results').empty();
-                $('#results').append("<p>"+data+"</p>");
-                alert(data);
+                $('#patternData').empty();
+                Object.keys(data["sentence_data"]).forEach(function (k) {
+                    $('#patternData').append(coloredPolarize(k, parseFloat(data["sentence_data"][k])));
+                });
+                $("#results").show(1000);
             }
         });
+
     })
+
+
 });
+
+function rgbToHex(rgb) {
+  var hex = Number(rgb).toString(16);
+  if (hex.length < 2) {
+       hex = "0" + hex;
+  }
+  return hex;
+};
+
+function toColor(r,g,b){
+    return rgbToHex(r) + rgbToHex(g) + rgbToHex(b);
+}
+
+function coloredPolarize(text, polarity) {
+    var color;
+
+    if(polarity < 0){
+        color = toColor(100 + Math.round((-1 * polarity) * 155), 100, 100);
+    }else if(polarity == 0){
+        color = toColor(100, 100, 100);
+    }else{
+        color = toColor(100, 100 + Math.round(polarity * 155), 100);
+    }
+
+    return "<div style='color:#" + color + "'>" + text + "</div>";
+}
