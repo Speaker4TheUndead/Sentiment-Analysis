@@ -30,13 +30,13 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (data) {
-                //$('#results').empty();
-                $('#results').append("<p>"+JSON.stringify(data)+"</p>");
+                $('#nv_results').empty();
+                $('#nv_results').append("<p>The overall sentiment is: " + data["sentiment"] + "<br>The positivity value is: " + data["pos"] + "<br>The negativity value is: " + data["neg"] + "</p>");
 
-                var graph_data= [{
-                    values:[data["pos"],data["neg"]],
-                    labels:['Positivity','Negativity'],
-                    type:'pie'
+                var graph_data = [{
+                    values: [data["pos"], data["neg"]],
+                    labels: ['Positivity', 'Negativity'],
+                    type: 'pie'
                 }];
 
                 var layout = {
@@ -56,27 +56,40 @@ $(document).ready(function () {
 
 
 function rgbToHex(rgb) {
-  var hex = Number(rgb).toString(16);
-  if (hex.length < 2) {
-       hex = "0" + hex;
-  }
-  return hex;
+    var hex = Number(rgb).toString(16);
+    if (hex.length < 2) {
+        hex = "0" + hex;
+    }
+    return hex;
 };
 
-function toColor(r,g,b){
+function toColor(r, g, b) {
     return rgbToHex(r) + rgbToHex(g) + rgbToHex(b);
 }
 
 function coloredPolarize(text, polarity) {
     var color;
 
-    if(polarity < 0){
+    if (polarity < 0) {
         color = toColor(100 + Math.round((-1 * polarity) * 155), 100, 100);
-    }else if(polarity == 0){
+    } else if (polarity == 0) {
         color = toColor(100, 100, 100);
-    }else{
+    } else {
         color = toColor(100, 100 + Math.round(polarity * 155), 100);
     }
-
+    $(".sentSent").empty();
     return "<div class='sentSent' style='color:#" + color + "'>" + text + "</div>";
+}
+
+function stripText(element) {
+    var item = element[0];
+    var newElement = $('<' + item.nodeName + '/>');
+    for (i = 0; i < item.attributes.length; i++) {
+        newElement.attr(item.attributes[i].name, item.attributes[i].value);
+    }
+    element.children().each(function () {
+        newElement.append(this);
+    });
+    element.replaceWith(newElement);
+    return newElement;
 }
