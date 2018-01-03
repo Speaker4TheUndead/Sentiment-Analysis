@@ -220,7 +220,8 @@ footer .glyphicon {
 
 #patternData {
     font-size: 1.5em;
-    overflow: scroll;
+    overflow-y: scroll;
+
 }
 
 
@@ -234,8 +235,4 @@ footer .glyphicon {
     content: "";
     display: table;
     clear: both;
-}
-
-#results {
-    max-height: 30vh;
 }
