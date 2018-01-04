@@ -70,7 +70,7 @@ def about_route():
 
 
 @app.route('/people')
-def donate_route():
+def people_route():
     return render_template('people.html')
 
 @app.route('/index')
