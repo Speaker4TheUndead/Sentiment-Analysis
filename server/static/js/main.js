@@ -19,7 +19,6 @@ $(document).ready(function () {
                 $('#patternData').empty();
                 Object.keys(data["sentence_data"]).forEach(function (k) {
                     $(coloredPolarize(k, parseFloat(data["sentence_data"][k]))).appendTo('#patternData');
-
                 });
             }
         });
@@ -32,7 +31,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 //$('#results').empty();
-                $('#results').append("<p>"+JSON.stringify(data)+"</p>");
+                //$('#results').append("<p>"+JSON.stringify(data)+"</p>");
 
                 var graph_data= [{
                     values:[data["pos"],data["neg"]],
@@ -41,6 +40,7 @@ $(document).ready(function () {
                 }];
 
                 var layout = {
+                    title: 'Positivity vs Negativity',
                     height: 400,
                     width: 600
                 };
