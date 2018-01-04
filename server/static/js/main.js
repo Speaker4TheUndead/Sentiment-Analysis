@@ -18,7 +18,8 @@ $(document).ready(function () {
             success: function (data) {
                 $('#patternData').empty();
                 Object.keys(data["sentence_data"]).forEach(function (k) {
-                    $('#patternData').append(coloredPolarize(k, parseFloat(data["sentence_data"][k])));
+                    $(coloredPolarize(k, parseFloat(data["sentence_data"][k]))).appendTo('#patternData');
+
                 });
             }
         });
@@ -52,7 +53,7 @@ $(document).ready(function () {
 
     })
 
-});
+})
 
 
 function rgbToHex(rgb) {
@@ -78,5 +79,5 @@ function coloredPolarize(text, polarity) {
         color = toColor(100, 100 + Math.round(polarity * 155), 100);
     }
 
-    return "<div class='sentSent' style='color:#" + color + "'>" + text + "</div>";
+    return "<div title='Polarity:" + polarity.toString() + "' class='sentSent' style='color:#" + color + "'>" + text + "</div>";
 }
