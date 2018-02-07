@@ -1,13 +1,16 @@
 $(document).ready(function () {
     GRAPH = document.getElementById('graph');
+    $('.loading').show();
     $("#results").hide();
     $("#base").append("<textarea id='text' rows=\"10\" cols=\"50\" placeholder='Enter the text you wish to analyze'></textarea>");
     $("#buttonDiv").append("<input class='btn btn-info btn-large' id='analyze' type='submit' value='Analyze'>");
     $("#graph").on('plotly_afterplot', function () {
+        $('.loading').hide();
         $("#results").show(1000);
     });
     $('#analyze').click(function () {
         var userText = $('#text').val();
+        $('.loading').show();
         $.ajax({
             url: '/analyze',
             type: 'POST',
