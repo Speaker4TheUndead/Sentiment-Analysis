@@ -244,8 +244,8 @@ footer .glyphicon {
     border: 16px solid #fafafa; /* Light grey */
     border-top: 16px solid #9639e2; /* Blue */
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
+    width: 20vw;
+    height: 20vw;
     animation: spin 2s linear infinite;
 }
 

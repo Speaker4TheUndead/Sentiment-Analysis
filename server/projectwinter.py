@@ -3,12 +3,14 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from textblob import TextBlob
+from textblob import Blobber
 from textblob.sentiments import NaiveBayesAnalyzer
 import json
-
+#Create the analyzer up here so we're not training it each run
+nv_blob = Blobber(analyzer=NaiveBayesAnalyzer())
 
 def analyze_nv(text):
-    blob = TextBlob(text, analyzer=NaiveBayesAnalyzer())
+    blob = nv_blob(text)
     jsonGraph = {"sentiment":blob.sentiment[0],
                 "pos":blob.sentiment[1],
                 "neg":blob.sentiment[2]}

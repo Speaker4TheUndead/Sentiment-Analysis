@@ -1,6 +1,6 @@
 $(document).ready(function () {
     GRAPH = document.getElementById('graph');
-    $('.loading').show();
+    $('.loading').hide();
     $("#results").hide();
     $("#base").append("<textarea id='text' rows=\"10\" cols=\"50\" placeholder='Enter the text you wish to analyze'></textarea>");
     $("#buttonDiv").append("<input class='btn btn-info btn-large' id='analyze' type='submit' value='Analyze'>");
